@@ -12,7 +12,6 @@ const transactionExplanationPath = `${recipe}/explanations/transaction.txt`;
 export const addAdminResourceToAccount= {
   slug: recipe,
   title: "Add Admin Resource to Account",
-  description: "",
   createdAt: Date(2022, 3, 1),
   author: "Flow Blockchain",
   playgroundLink:
