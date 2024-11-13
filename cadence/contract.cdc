@@ -2,11 +2,11 @@
 // allows the owner to perform important NFT 
 // functions
 //
-pub resource Admin {
+access(all) resource Admin {
 
-.....
+    .....
 
-    pub fun createNewAdmin(): @Admin {
+    access(all) fun createNewAdmin(): @Admin {
         return <-create Admin()
     }
 
