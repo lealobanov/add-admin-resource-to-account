@@ -4,10 +4,8 @@
 //
 access(all) resource Admin {
 
-    .....
-
     access(all) fun createNewAdmin(): @Admin {
         return <-create Admin()
     }
-
+    
 }

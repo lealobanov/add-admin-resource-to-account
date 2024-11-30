@@ -2,13 +2,17 @@ import SetAndSeries from 0x01
 
 transaction {
 
-    let adminCheck: &SetAndSeries.Admin
+    prepare(signer: auth(Storage) &Account) { 
+        let acct = signer.storage.borrow<&SetAndSeries>(from: /storage/myCollection)
+            ?? panic("Failed to borrow reference to collection")
 
-    prepare(acct: auth(Storage) &Account, acct2: auth(Storage) &Account) {
-        self.adminCheck = acct.borrow<&SetAndSeries.Admin>(from: SetAndSeries.AdminStoragePath)
-            ?? panic("Could not borrow admin reference")
+        let result1 = acct.performOperation()
+        log(result1)
 
-        acct2.storage.save(<-self.adminCheck.createNewAdmin(), to: SetAndSeries.AdminStoragePath)
+        let acct2 = signer.storage.borrow<&SetAndSeries>(from: /storage/anotherCollection)
+            ?? panic("Failed to borrow reference to another collection")
+        let result2 = acct2.performAnotherOperation()
+        log(result2)
     }
 
     execute {
