@@ -1,1 +1,5 @@
-Before executing this transaction you first need to borrow the Admin resource from the 'acct'. Once that is borrowed, you then take 'acct2' and save the resource that is returned when you call the createNewAdmin() funtion to your storage path.
+Before running this transaction, you need to borrow the Admin resource from the account's storage. This is done by accessing the SetAndSeries resource stored at /storage/myCollection. If the resource is not found, the transaction will stop and show an error.
+
+Once the resource is borrowed, the performOperation function is called on it, and the result is logged. Next, the transaction borrows another SetAndSeries resource from /storage/anotherCollection. If this resource cannot be found, the transaction will error out as well. After successfully borrowing it, the performAnotherOperation function is called, and its result is also logged.
+
+In the final step, the transaction logs a message confirming that a new Admin resource has been created. This ensures the transaction is complete and provides a clear record of its success.
