@@ -9,7 +9,7 @@ When you want to give someone else access to the admin resource.
 - [Description](#description)
 - [What is included in this repository?](#what-is-included-in-this-repository)
 - [Supported Recipe Data](#recipe-data)
--[Deploying Recipe Contracts and Running Transactions Locally (Flow Emulator)](#deploying-recipe-contracts-and-running-transactions-locally-flow-emulator)
+- [Deploying Recipe Contracts and Running Transactions Locally (Flow Emulator)](#deploying-recipe-contracts-and-running-transactions-locally-flow-emulator)
 - [License](#license)
 
 ## Description
