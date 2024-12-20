@@ -1,1 +1,0 @@
-./cadence/transactions/add_admin_resource.cdc
