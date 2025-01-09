@@ -1,22 +1,28 @@
 import "NonFungibleToken"
+import "ExampleNFT"
 
 transaction {
 
-    prepare(signer: auth(Storage) &Account) {
+    prepare(signer: auth(Storage, Capabilities) &Account) {
+
+        // Return early if the account already has a collection
+        if signer.storage.borrow<&ExampleNFT.Collection>(from: ExampleNFT.CollectionStoragePath) != nil {
+            return
+        }
 
         // Create a new empty collection
-        let collection <- NonFungibleToken.createEmptyCollection()
+        let collection <- ExampleNFT.createEmptyCollection()
 
         // Save it to the account
-        signer.storage.save(<-collection, to: NonFungibleToken.CollectionStoragePath)
+        signer.storage.save(<-collection, to: ExampleNFT.CollectionStoragePath)
 
         // Issue a capability for the collection
-        let cap = signer.capabilities.storage.issue<&NonFungibleToken.Collection>(
-            NonFungibleToken.CollectionStoragePath
+        let cap = signer.capabilities.storage.issue<&ExampleNFT.Collection>(
+            ExampleNFT.CollectionStoragePath
         )
 
         // Publish the capability for public use
-        signer.capabilities.publish(cap, at: NonFungibleToken.CollectionPublicPath)
+        signer.capabilities.publish(cap, at: ExampleNFT.CollectionPublicPath)
 
         let acct = signer.storage.borrow<&{NonFungibleToken.Collection}>(from: /storage/myNFTCollection)
             ?? panic("Failed to borrow reference to the NFT collection")
