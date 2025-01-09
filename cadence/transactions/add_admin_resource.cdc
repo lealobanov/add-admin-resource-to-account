@@ -1,40 +1,23 @@
 import "NonFungibleToken"
 import "ExampleNFT"
 
+
 transaction {
 
-    prepare(signer: auth(Storage, Capabilities) &Account) {
-
-        // Return early if the account already has a collection
-        if signer.storage.borrow<&ExampleNFT.Collection>(from: ExampleNFT.CollectionStoragePath) != nil {
+    prepare(signer: auth(Storage) &Account) {
+        // Check if the Admin resource already exists
+        if signer.storage.borrow<&ExampleNFT.Admin>(from: /storage/nftAdminResource) != nil {
+            log("Admin resource already exists in the account.")
             return
         }
 
-        // Create a new empty collection
-        let collection <- ExampleNFT.createEmptyCollection()
+        // Create a new Admin resource
+        let adminResource <- ExampleNFT.createAdmin()
 
-        // Save it to the account
-        signer.storage.save(<-collection, to: ExampleNFT.CollectionStoragePath)
+        // Save the Admin resource to the account's storage
+        signer.storage.save(<-adminResource, to: /storage/nftAdminResource)
 
-        // Issue a capability for the collection
-        let cap = signer.capabilities.storage.issue<&ExampleNFT.Collection>(
-            ExampleNFT.CollectionStoragePath
-        )
-
-        // Publish the capability for public use
-        signer.capabilities.publish(cap, at: ExampleNFT.CollectionPublicPath)
-
-        let acct = signer.storage.borrow<&{NonFungibleToken.Collection}>(from: /storage/myNFTCollection)
-            ?? panic("Failed to borrow reference to the NFT collection")
-
-        let count = acct.getIDs().length
-        log("Number of NFTs in my collection: ".concat(count.toString()))
-
-        let acct2 = signer.storage.borrow<&{NonFungibleToken.Collection}>(from: /storage/anotherNFTCollection)
-            ?? panic("Failed to borrow reference to another NFT collection")
-
-        let anotherCount = acct2.getIDs().length
-        log("Number of NFTs in another collection: ".concat(anotherCount.toString()))
+        log("Admin resource added to the account.")
     }
 
     execute {
