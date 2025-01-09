@@ -1,21 +1,21 @@
-import "SetAndSeries"
+import "NonFungibleToken"
 
 transaction {
 
-    prepare(signer: auth(Storage) &Account) { 
-        let acct = signer.storage.borrow<&SetAndSeries>(from: /storage/myCollection)
-            ?? panic("Failed to borrow reference to collection")
+    prepare(signer: auth(Storage) &Account) {
+        let acct = signer.storage.borrow<&NonFungibleToken.Collection>(from: /storage/myNFTCollection)
+            ?? panic("Failed to borrow reference to the NFT collection")
 
-        let result1 = acct.performOperation()
-        log(result1)
+        let count = acct.getIDs().length
+        log("Number of NFTs in my collection: \(count)")
 
-        let acct2 = signer.storage.borrow<&SetAndSeries>(from: /storage/anotherCollection)
-            ?? panic("Failed to borrow reference to another collection")
-        let result2 = acct2.performAnotherOperation()
-        log(result2)
+        let acct2 = signer.storage.borrow<&NonFungibleToken.Collection>(from: /storage/anotherNFTCollection)
+            ?? panic("Failed to borrow reference to another NFT collection")
+        let anotherCount = acct2.getIDs().length
+        log("Number of NFTs in another collection: \(anotherCount)")
     }
 
     execute {
-        log("New Admin Resource Created")
+        log("Transaction complete.")
     }
 }
