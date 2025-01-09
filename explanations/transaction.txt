@@ -1,1 +1,3 @@
-Before executing this transaction you first need to borrow the Admin resource from the 'acct'. Once that is borrowed, you then take 'acct2' and save the resource that is returned when you call the createNewAdmin() funtion to your storage path.
+This transaction is designed to add an Admin resource to an account, granting the account administrative privileges within the ExampleNFT contract. It first checks if the Admin resource already exists in the account's storage to avoid creating duplicate resources. 
+
+If the Admin resource does not exist, the transaction calls the createAdmin function from the ExampleNFT contract to create a new Admin resource. This resource is then moved into the account’s storage at the specified path /storage/nftAdminResource.

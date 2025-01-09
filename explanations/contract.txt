@@ -1,1 +1,5 @@
-This code is used to create a new Admin resource which can then be saved to another users account
+The Recipe contract is designed to manage administrative permissions using a special resource called Admin. This resource gives its owner the ability to perform important NFT-related actions in a secure and controlled way.
+
+The Admin resource includes a function called createNewAdmin. This function allows the creation of new Admin resources, which can be given to other users. These users can then store the Admin resource in their account and gain administrative permissions.
+
+By keeping these permissions within the Admin resource, the contract ensures that critical operations are carefully managed. This makes the system secure and flexible, especially useful for NFT platforms or other applications that need clear and safe access controls.
